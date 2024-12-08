@@ -15,10 +15,11 @@ class Article:
         return self._title
     
     @title.setter
-    def title(self, title_parameter):
+    
+    def title(self, myTitle):
         # Set the title if it hasn't been set yet, is a string, and its length is between 5 and 50 characters.
-        if (not hasattr(self, 'title')) and isinstance(title_parameter, str) and (5 <= len(title_parameter) <= 50):
-            self._title = title_parameter
+        if (not hasattr(self, 'Title')) and isinstance(myTitle, str) and (5 <= len(myTitle) <= 50):
+            self._title = myTitle
 
     @property
     def author(self):
@@ -26,10 +27,10 @@ class Article:
         return self._author
 
     @author.setter
-    def author(self, author_parameter):
+    def author(self, my_author):
         # Set the author if it's an instance of the Author class.
-        if isinstance(author_parameter, Author):
-            self._author = author_parameter
+        if isinstance(my_author, Author):
+            self._author = my_author
 
     @property
     def magazine(self):
@@ -37,10 +38,10 @@ class Article:
         return self._magazine
 
     @magazine.setter
-    def magazine(self, magazine_parameter):
+    def magazine(self, magazine_params):
         # Set the magazine if it's an instance of the Magazine class.
-        if isinstance(magazine_parameter, Magazine):
-            self._magazine = magazine_parameter
+        if isinstance(magazine_params, Magazine):
+            self._magazine = magazine_params
 
 
 class Author:
@@ -55,10 +56,10 @@ class Author:
         return self._name
 
     @name.setter
-    def name(self, name_parameter):
+    def name(self, my_name):
         # Set the name if it hasn't been set yet, is a string, and is not empty.
-        if (not hasattr(self, 'name')) and isinstance(name_parameter, str) and (len(name_parameter) > 0):
-            self._name = name_parameter
+        if (not hasattr(self, 'name')) and isinstance(my_name, str) and (len(my_name) > 0):
+            self._name = my_name
 
     def articles(self):
         # Get all articles written by this author.
@@ -79,7 +80,6 @@ class Author:
         else:
             return [magazine.category for magazine in self.magazines()]
 
-
 class Magazine:
     # This class represents a magazine that publishes articles.
 
@@ -93,10 +93,10 @@ class Magazine:
         return self._name
     
     @name.setter
-    def name(self, name_parameter):
+    def name(self, myName):
         # Set the name if it's a string and its length is between 2 and 16 characters.
-        if isinstance(name_parameter, str) and (2 <= len(name_parameter) <= 16):
-            self._name = name_parameter
+        if isinstance(myName, str) and (2 <= len(myName) <= 16):
+            self._name = myName
 
     @property
     def category(self):
@@ -104,10 +104,10 @@ class Magazine:
         return self._category
     
     @category.setter
-    def category(self, category_parameter):
+    def category(self, my_category):
         # Set the category if it's a string and not empty.
-        if isinstance(category_parameter, str) and (len(category_parameter) > 0):
-            self._category = category_parameter
+        if isinstance(my_category, str) and (len(my_category) > 0):
+            self._category = my_category
 
     def articles(self):
         # Get all articles published in this magazine.
@@ -126,11 +126,12 @@ class Magazine:
 
     def contributing_authors(self):
         # Get a list of authors who have contributed more than 2 articles to this magazine.
-        contributing_authors_list = [
+        contributingAuthors = [
             author for author in self.contributors()
             if len([article for article in author.articles() if article.magazine is self]) > 2
         ]
-        if len(contributing_authors_list) == 0:
+        if len(contributingAuthors) == 0:
             return None  # If no such authors, return None.
         else:
-            return contributing_authors_list
+            return contributingAuthors
+
