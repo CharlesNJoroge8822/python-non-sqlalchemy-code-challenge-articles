@@ -1,0 +1,168 @@
+# class Article:
+#     all_articles = []  # Store all Article instances
+
+#     def __init__(self, author, magazine, title):
+#         if not isinstance(author, Author):
+#             raise ValueError("Author must be an instance of the Author class.")
+#         if not isinstance(magazine, Magazine):
+#             raise ValueError("Magazine must be an instance of the Magazine class.")
+#         if not isinstance(title, str) or not title.strip():
+#             raise ValueError("Title must be a non-empty string.")
+        
+#         self.author = author
+#         self.magazine = magazine
+#         self._title = title  # Use private variable for title
+#         Article.all_articles.append(self)  # Add to the global list of articles
+
+#     @property
+#     def title(self):
+#         return self._title  # Return the private title attribute
+
+
+# class Author:
+#     def __init__(self, name):
+#         if not isinstance(name, str) or not name.strip():
+#             raise ValueError("Author name must be a non-empty string.")
+#         self._name = name  # Private variable for name
+
+#     @property
+#     def name(self):
+#         return self._name
+
+#     def articles(self):
+#         return [article for article in Article.all_articles if article.author == self]
+
+#     def magazines(self):
+#         return list({article.magazine for article in self.articles()})
+
+#     def add_article(self, magazine, title):
+#         return Article(self, magazine, title)
+
+
+# class Magazine:
+#     def __init__(self, name, category):
+#         self.name = name  # Use the setter to validate
+#         self.category = category  # Use the setter to validate
+
+#     @property
+#     def name(self):
+#         return self._name
+
+#     @name.setter
+#     def name(self, value):
+        
+#         if not isinstance(value, str) or not value.strip():
+#             raise ValueError("Magazine name must be a non-empty string.")
+#         self._name = value
+
+#     @property
+#     def category(self):
+#         return self._category
+
+#     @category.setter
+#     def category(self, value):
+#         if not isinstance(value, str) or not value.strip():
+#             raise ValueError("Category must be a non-empty string.")
+#         self._category = value
+
+#     def articles(self):
+#         return [article for article in Article.all_articles if article.magazine == self]
+
+#     def contributors(self):
+#         return list({article.author for article in self.articles()})
+
+#     def article_titles(self):
+#         titles = [article.title for article in self.articles()]
+#         return titles if titles else None
+
+#     def contributing_authors(self):
+#         author_counts = {}  # Count articles for each author
+#         for article in self.articles():
+#             author_counts[article.author] = author_counts.get(article.author, 0) + 1
+
+#         return [author for author, count in author_counts.items() if count > 2] or None
+
+
+
+
+
+
+
+
+
+
+
+
+////// INSTANCES FOR THE MANY-MANY R/SHIP
+
+
+# Create Authors
+author_1 = Author("John Doe")
+author_2 = Author("Jane Smith")
+
+# Create Magazines
+magazine_1 = Magazine("Tech Trends", "Technology")
+magazine_2 = Magazine("Health Daily", "Health")
+
+# Add Articles
+article_1 = author_1.add_article(magazine_1, "The Future of AI")
+article_2 = author_1.add_article(magazine_2, "How to Stay Healthy")
+article_3 = author_2.add_article(magazine_1, "Quantum Computing Explained")
+article_4 = author_2.add_article(magazine_1, "The Rise of Cryptocurrencies")
+
+# Check relationships
+
+# Author's Articles
+print(f"Articles by {author_1.name}:")
+for article in author_1.articles():
+    print(f"- {article.title}")
+
+# Author's Magazines
+print(f"Magazines by {author_1.name}:")
+for magazine in author_1.magazines():
+    print(f"- {magazine.name}")
+
+# Magazine's Articles
+print(f"Articles in {magazine_1.name}:")
+for article in magazine_1.articles():
+    print(f"- {article.title}")
+
+# Magazine's Contributors
+print(f"Contributors to {magazine_1.name}:")
+for author in magazine_1.contributors():
+    print(f"- {author.name}")
+
+# Author's Topic Areas
+print(f"{author_1.name}'s Topic Areas:")
+for topic in author_1.topic_areas():
+    print(f"- {topic}")
+
+# Magazine's Article Titles
+print(f"Article titles in {magazine_1.name}:")
+for title in magazine_1.article_titles():
+    print(f"- {title}")
+
+# Magazine's Contributing Authors
+print(f"Contributing authors for {magazine_1.name}:")
+for author in magazine_1.contributing_authors():
+    print(f"- {author.name}")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
